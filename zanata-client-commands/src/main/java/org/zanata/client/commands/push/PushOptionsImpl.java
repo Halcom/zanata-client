@@ -23,11 +23,15 @@ package org.zanata.client.commands.push;
 
 import com.google.common.collect.ImmutableList;
 import org.kohsuke.args4j.Option;
+import org.zanata.adapter.xliff.XliffCommon;
 import org.zanata.client.commands.AbstractPushPullOptionsImpl;
 import org.zanata.client.commands.BooleanValueHandler;
 import org.zanata.client.commands.PushPullType;
 import org.zanata.client.commands.ZanataCommand;
 import org.zanata.util.StringUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Sean Flanigan <a
@@ -39,7 +43,7 @@ public class PushOptionsImpl extends AbstractPushPullOptionsImpl<PushOptions>
     private static final boolean DEF_EXCLUDES = true;
     private static final boolean DEF_CASE_SENSITIVE = true;
     private static final boolean DEF_EXCLUDE_LOCALES = true;
-    private static final boolean DEF_COPYTRANS = true;
+    private static final boolean DEF_COPYTRANS = false;
     private static final boolean DEF_MY_TRANS = false;
     private static final int DEF_CHUNK_SIZE = 1024 * 1024;
     /** @see org.zanata.common.MergeType for options */
@@ -58,6 +62,7 @@ public class PushOptionsImpl extends AbstractPushPullOptionsImpl<PushOptions>
     private String pushType = DEF_PUSH_TYPE;
     private String sourceLang = "en-US";
 
+    @Nullable
     private String validate;
     private boolean myTrans = DEF_MY_TRANS;
 
@@ -189,7 +194,7 @@ public class PushOptionsImpl extends AbstractPushPullOptionsImpl<PushOptions>
         return fileTypes;
     }
 
-    private static final String fileTypeHelp = "File types to locate and transmit to the server. \n" +
+    public static final String fileTypeHelp = "File types to locate and transmit to the server. \n" +
         "Default file extension will be used unless it is being specified. \n" +
         "Pattern: TYPE[extension;extension],TYPE[extension] \n" +
         "Supported types: \n" +
@@ -206,7 +211,7 @@ public class PushOptionsImpl extends AbstractPushPullOptionsImpl<PushOptions>
         "\t PROPERTIES[properties] \n" +
         "\t PROPERTIES_UTF8[properties] \n" +
         "\t XLIFF[xml] \n" +
-        "Usage --file-types \"XML_DOCUMENT_TYPE_DEFINITION,IDML[txt]\"";
+        "Usage --file-types \"XML_DOCUMENT_TYPE_DEFINITION,PLAIN_TEXT[md;txt]\"";
 
     @Option(name = "--file-types", metaVar = "TYPES",
             usage = fileTypeHelp)
@@ -250,7 +255,11 @@ public class PushOptionsImpl extends AbstractPushPullOptionsImpl<PushOptions>
     }
 
     @Override
+    @Nonnull
     public String getValidate() {
+        if (validate == null) {
+            return XliffCommon.ValidationType.CONTENT.name();
+        }
         return validate;
     }
 

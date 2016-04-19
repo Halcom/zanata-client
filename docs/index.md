@@ -21,15 +21,20 @@ Installation
 
 For installation instructions, see:
 
-- [Linux Installation](installation/linux-installation)
-- [OS X Installation](installation/osx-installation)
-- [Windows Installation](installation/windows-installation)
+- [Linux Installation](installation/linux-installation.md)
+- [OS X Installation](installation/osx-installation.md)
+- [Windows Installation](installation/windows-installation.md)
 
 Contribute
 ----------
 
-- [Issue Tracker](http://bugzilla.redhat.com/buglist.cgi?product=Zanata)
-- [Source Code on GitHub](http://github.com/zanata-client)
+- [Issue Tracker](https://zanata.atlassian.net)
+- [Source Code on GitHub](http://github.com/zanata/zanata-client)
+
+Release notes
+-------
+
+[Release notes](release-notes.md)
 
 Contact us
 -------
@@ -50,4 +55,4 @@ License
 -------
 Zanata is Free software, licensed under the [LGPL](http://www.gnu.org/licenses/lgpl-2.1.html).
 
-Copyright &copy; 2015, <a href="http//www.redhat.com">Red Hat, Inc</a>.
+Copyright &copy; 2015, <a href="http://www.redhat.com">Red Hat, Inc</a>.
